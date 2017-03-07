@@ -1,0 +1,35 @@
+body{
+	background-color: #1B2737;
+}
+
+#new-ball{
+	position: fixed;
+	bottom: 5%;
+	left: 50%;
+	margin-left: -28px;
+}
+
+#score-card{
+	position: fixed;
+	left: 10px;
+	top: 10px;
+	padding: 5px 20px;
+}
+
+#score-card h4{
+	line-height: 20px;
+}
+
+#toss-content .card-panel{
+	padding: 20px 50px;
+}
+
+.ball-status h5{
+	line-height: 15px !important;
+	font-size: 15px;
+}
+
+.ball-status .card-panel{
+	padding: 5px;
+	border-radius: 10px;
+}

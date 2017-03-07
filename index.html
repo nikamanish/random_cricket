@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cricket Match</title>
+		<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href="index.css">
+	</head>
+	<body>
+		<main>
+			<h2 class="center-align white-text">The Random Cricket</h2>
+			<div id="toss-content">
+				<div class="row container">
+
+					<div id="player-info" style="display: none;">
+						<div class="s5 col card-panel blue">
+							<div class="input-field black-text"> 
+					          <input id="player1" type="text" class="validate" style="border-color: white;">
+					          <label for="player1" style="color: white;">Player 1</label>
+					        </div>
+				        </div>
+				        <div class="col s2 center-align">
+					        <div class="preloader-wrapper" id="loader">
+								<div class="spinner-layer spinner-green-only">
+									<div class="circle-clipper left">
+										<div class="circle"></div>
+									</div>
+									<div class="gap-patch">
+										<div class="circle"></div>
+									</div>
+									<div class="circle-clipper right">
+										<div class="circle"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+				        <div class="s5 col card-panel red">
+							<div class="input-field">
+					          <input id="player2" type="text" class="validate" style="border-color: white">
+					          <label for="player2" style="color: white;">Player 2</label>
+					      	</div>
+
+				        </div>
+
+				        <div class="col s12 center-align">
+					        <a class="waves-effect waves-light btn green" onclick="toss();" id="bat">TOSS</a>
+				        </div>
+
+			        </div>
+
+
+			        <div id="toss-info" style="display: block;">
+				        <div class="s6 offset-s3 col card-panel center-align" id="toss-win-card">
+							<h5 id="toss-string">Player 1 won the toss</h5>
+				        </div>
+				        <div class="col s12 center-align">
+					        <a class="waves-effect waves-light btn green" id="bat" onclick="choose(this);">BAT</a>
+					        <a class="waves-effect waves-light btn green" id="bowl" onclick="choose(this);">BOWL</a>
+				        </div>
+			        </div>
+
+
+				</div>
+			</div>
+
+			<div id="play-content" style="display: none;">
+				<div class="card-panel center-align " id="score-card">
+		          	<h5 id="score-display">120/4</h5>
+		          	<h6 id="over-display">2.4</h6>
+		        </div>
+				<div class="row container" id="overview">
+					
+					
+				</div>
+				<a class="btn-floating btn-large waves-effect waves-light blue" onclick="play(this)" id="new-ball"><i class="material-icons">add</i></a>
+			</div>
+
+		</main>
+	</body>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
+
+	<script type="text/javascript" src="index.js"></script>
+</html>
