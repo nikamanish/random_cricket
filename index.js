@@ -1,9 +1,8 @@
-var possible_balls = [0,0,1,1,2,3,4,4,6,"wd", "W", "W", "nb"]
+var possible_balls = [0,1,1,0,2,3,0,4,4,6,"wd", "W", "W", "nb"]
 var current_over_status = new Array();
 var MAX_OVERS = 4;
 var MAX_WICKETS = 10;
-var player1_name = "";
-var player2_name = "";
+var player_name = ["",""];
 var winner=1;
 var name = "Manish";
 var bg_color = "blue";
@@ -17,12 +16,15 @@ var wickets = [0,0];
 var over_ctr = 0;
 var ball_ctr = 0;
 var over_start = true;
+var target = 0;
+var win = false;
+var winner_index;
 
 function validate(){
-	player1_name = document.getElementById("player1").value;
-	player2_name = document.getElementById("player2").value;
+	player_name[0] = document.getElementById("player1").value;
+	player_name[1] = document.getElementById("player2").value;
 
-	if(player1_name == "" || player2_name == ""){
+	if(player_name[0] == "" || player_name[1] == ""){
 		Materialize.toast('Enter the names of players', 3000, 'rounded');
 		return false;
 	}
@@ -38,10 +40,10 @@ function toss(){
 	console.log(winner);
 
 	if(winner == 0){
-		name = player1_name;
+		name = player_name[0];
 		bg_color = "blue";
 	}else{
-		name = player2_name;
+		name = player_name[1];
 		bg_color = "red";
 	}
 
@@ -72,13 +74,42 @@ function choose(e){
 	}else{
 		current_player_index = (winner+1)%2;
 	}
+	document.getElementById("player-name").innerHTML = player_name[current_player_index];
 	update_score_board();
 	
 }
 
+function change_innings(){
+	document.getElementById("overview").innerHTML = "";
+	target = score[current_player_index] + 1
+	document.getElementById("target").innerHTML = "Target : " + (target);
+	current_player_index = (current_player_index+1)%2;
+	innings = 2;
+	over_ctr = 0;
+	ball_ctr = 0;
+	over_start = true;
+	document.getElementById("player-name").innerHTML = player_name[current_player_index];
+	document.getElementById("new-ball").innerHTML = '<i class="material-icons">add</i></a>';
+	update_score_board();
+	
+
+}
+
 function play(e){
 	
-	if(over_ctr >= MAX_OVERS){
+	if(win){
+
+		document.getElementById("winner-display").style.display = "block";
+		document.getElementById("play-content").style.display = "none";
+		if(winner_index == -1){
+			document.getElementById("winner-name").innerHTML = "Match Tied";
+		}else{
+			document.getElementById("winner-name").innerHTML = "Winner is " + player_name[winner_index];
+		}
+	}
+	
+	if(over_ctr >= MAX_OVERS || wickets[current_player_index] >= MAX_WICKETS){
+		change_innings();
 		return;
 	}
 
@@ -114,7 +145,7 @@ function play(e){
 	
 	console.log(current_ball + "  " + random_ball);
 
-	var html = '<div class="ball-status col s2 m1 center-align"><div class="card-panel ' + ball_bg_color+  '"><h5>' + current_ball + '</h5></div></div>'
+	var html = '<div class="ball-status col s2 m2 l1 center-align"><div class="card-panel ' + ball_bg_color+  '"><h5>' + current_ball + '</h5></div></div>'
 	document.getElementById("overview").innerHTML += html;
 
 	if(ball_ctr == 6){
@@ -123,11 +154,28 @@ function play(e){
 		over_ctr ++;
 
 	}
+	if(over_ctr >= MAX_OVERS || wickets[current_player_index] >= MAX_WICKETS){
+		document.getElementById("new-ball").innerHTML = '<i class="material-icons">navigate_next</i></a>';
+	}
 
 	
 	update_score_board();
 
-
-	
-
+	if(innings == 2 && !win){
+		if(score[current_player_index] >= target){
+			win = true;
+			winner_index = current_player_index;
+			
+		}else if(over_ctr >= MAX_OVERS){
+			win = true;
+			winner_index = (current_player_index+1)%2;
+			if(score[current_player_index] == target - 1){
+				winner_index = -1;
+				win = true;
+			}
+		}else if(wickets[current_player_index] >= MAX_WICKETS){
+			win = true;
+			winner_index = (current_player_index+1)%2;
+		}
+	}
 }
